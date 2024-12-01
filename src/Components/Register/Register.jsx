@@ -15,12 +15,14 @@ const Register = () => {
 
         // reset error
         setRegisterError('');
+        setSuccess('');
 
 
         // create user
         createUserWithEmailAndPassword(auth, email, password)
             .then(result => {
                 console.log(result.user);
+                setSuccess('User Created Successfully.');
             })
             .catch(error => {
                 console.error(error);
@@ -42,6 +44,9 @@ const Register = () => {
                 </form>
                 {
                     registerError && <p className="text-red-600">{registerError}</p>
+                }
+                {
+                    success && <p className="text-green-600">{success}</p>
                 }
             </div>
         </div>
