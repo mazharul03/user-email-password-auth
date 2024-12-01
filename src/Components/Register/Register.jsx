@@ -5,12 +5,18 @@ import { useState } from "react";
 const Register = () => {
 
     const [registerError, setRegisterError] = useState('');
+    const [success, setSuccess] = useState('');
 
     const handleRegister = e => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email, password);
+
+        // reset error
+        setRegisterError('');
+
+
         // create user
         createUserWithEmailAndPassword(auth, email, password)
             .then(result => {
