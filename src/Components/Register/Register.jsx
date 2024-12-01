@@ -13,7 +13,8 @@ const Register = () => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(email, password);
+        const accepted = e.target.terms.checked;
+        console.log(email, password, accepted);
 
         // reset error
         setRegisterError('');
@@ -25,6 +26,10 @@ const Register = () => {
         }
         else if (!/[A-Z]/.test(password)) {
             setRegisterError('Your password should have at least one upper case characters.')
+            return;
+        }
+        else if(!accepted){
+            setRegisterError('Please accept our terms and conditions!')
             return;
         }
 
@@ -48,17 +53,24 @@ const Register = () => {
                 <form onSubmit={handleRegister}>
                     <input className="mb-4 w-3/4 py-2 px-4" type="email" placeholder="Email Address" name="email" id="" required />
                     <br />
-                    <input
-                        className="mb-4 w-3/4 py-2 px-4"
-                        type={showPassword ? "text" : "password"}
-                        name="password"
-                        placeholder="Password"
-                        id="" required />
-                    <span onClick={ () => setShowPassword(!showPassword)}>
-                        {
-                            showPassword ? <FaRegEye /> : <FaRegEyeSlash />
-                        }
-                    </span>
+                    <div className="relative">
+                        <input
+                            className="mb-4 w-3/4 py-2 px-4"
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            placeholder="Password"
+                            id="" required />
+                        <span className="absolute top-1/4 right-44" onClick={() => setShowPassword(!showPassword)}>
+                            {
+                                showPassword ? <FaRegEye /> : <FaRegEyeSlash />
+                            }
+                        </span>
+                    </div>
+                    <br />
+                    <div className="mb-1">
+                        <input type="checkbox" name="terms" id="terms" />
+                        <label className="ml-2" htmlFor="terms">Accept our <a href="">Terms & Conditions</a></label>
+                    </div>
                     <br />
                     <input className="btn btn-secondary mb-4 w-3/4" type="submit" value="Register" />
                 </form>
