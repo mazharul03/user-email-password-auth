@@ -46,6 +46,8 @@ const Register = () => {
                     displayName: name,
                     photoURL: "https://example.com/jane-q-user/profile.jpg"
                 })
+                .then(() => console.log('Profile updated'))
+                .catch()
 
                 // send verification email:
                 sendEmailVerification(result.user)
