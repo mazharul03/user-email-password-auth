@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useRef, useState } from 'react';
 import auth from '../../firebase/firebase.config';
 import { Link } from 'react-router-dom';
@@ -36,13 +36,24 @@ const Login = () => {
     const handleForgetPassword = () => {
         const email = emailRef.current.value;
         if(!email){
-            console.log('send reset email', emailRef.current.value)
+            console.log('Please provide an email', emailRef.current.value)
             return;
         }
         else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
             console.log('Please write a valid email');
             return;
         }
+
+        // set validation email
+        sendPasswordResetEmail(auth, email)
+        .then(()=> {
+            alert('Please check your email')
+            return;
+        })
+        .catch(error => {
+            console.log(error)
+        })
+
     }
 
     return (
