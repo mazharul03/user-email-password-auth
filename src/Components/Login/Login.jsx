@@ -25,7 +25,13 @@ const Login = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then(result => {
                 console.log(result.user);
-                setSuccess('User Logged in Successfully.');
+                if (result.user.emailVerified) {
+                    setSuccess('User Logged in Successfully.');
+                }
+                else{
+                    alert('Please verify your email address')
+                }
+
             })
             .catch(error => {
                 console.error(error);
@@ -35,24 +41,24 @@ const Login = () => {
 
     const handleForgetPassword = () => {
         const email = emailRef.current.value;
-        if(!email){
+        if (!email) {
             console.log('Please provide an email', emailRef.current.value)
             return;
         }
-        else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             console.log('Please write a valid email');
             return;
         }
 
         // set validation email
         sendPasswordResetEmail(auth, email)
-        .then(()=> {
-            alert('Please check your email')
-            return;
-        })
-        .catch(error => {
-            console.log(error)
-        })
+            .then(() => {
+                alert('Please check your email')
+                return;
+            })
+            .catch(error => {
+                console.log(error)
+            })
 
     }
 
